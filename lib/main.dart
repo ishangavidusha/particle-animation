@@ -158,29 +158,29 @@ class MyPainter extends CustomPainter {
 class Particle {
   double radius;
   Offset position;
-  Offset villosity;
+  Offset velocity;
   Particle({
     required this.radius,
     required this.position,
-    required this.villosity,
+    required this.velocity,
   });
 
   factory Particle.generate(double width, double height, int xDirection, int yDirection) {
     return Particle(
       radius: RandomNum.nextDouble(min: 2.0, max: 4.0),
       position: Offset(RandomNum.nextDouble(min: 10, max: width - 10), RandomNum.nextDouble(min: 10, max: height - 10)),
-      villosity: Offset(RandomNum.nextDouble(min: 0.05, max: 0.2) * xDirection, RandomNum.nextDouble(min: 0.05, max: 0.2) * yDirection),
+      velocity: Offset(RandomNum.nextDouble(min: 0.05, max: 0.2) * xDirection, RandomNum.nextDouble(min: 0.05, max: 0.2) * yDirection),
     );
   }
 
   void travel(Size canvas) {
-    if (position.dx + villosity.dx > canvas.width - radius || position.dx + villosity.dx < radius) {
-      villosity = Offset(-villosity.dx, villosity.dy);
+    if (position.dx + velocity.dx > canvas.width - radius || position.dx + velocity.dx < radius) {
+      velocity = Offset(-velocity.dx, velocity.dy);
     }
-    if (position.dy + villosity.dy > canvas.height - radius || position.dy + villosity.dy < radius) {
-      villosity = Offset(villosity.dx, -villosity.dy);
+    if (position.dy + velocity.dy > canvas.height - radius || position.dy + velocity.dy < radius) {
+      velocity = Offset(velocity.dx, -velocity.dy);
     }
-    position = Offset(position.dx + villosity.dx, position.dy + villosity.dy);
+    position = Offset(position.dx + velocity.dx, position.dy + velocity.dy);
   }
 }
 
